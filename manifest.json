@@ -6,10 +6,10 @@
   "description": "Quick & Convenient Flashcard Generation",
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "icons/anytimePause-48.png"
+    "default_icon": "icons/logo.png"
   },
   "icons": {
-    "48": "icons/anytimePause-48.png"
+    "48": "icons/logo-48.png"
   },
   "content_scripts": [
     {
