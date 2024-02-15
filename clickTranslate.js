@@ -50,10 +50,13 @@ function saveTranslation(word, translation) {
 
 function init() {
     console.log('hello from clickTranslate.js!');
-    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log(browser);
+    browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        console.log('event recieved');
+        console.log(request);
         if (request.action === "getClickedWords") {
-            console.log('clickedWords:', clickedWords);
-            sendResponse({ data: clickedWords });
+            console.log('translationData:', translationData);
+            sendResponse({ data: translationData });
         }
     });
 }

@@ -2,21 +2,26 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('dom content loaded');
     console.log(chrome);
     console.log(chrome.tabs);
-    console.log(chrome.tabs.query({active: true, currentWindow: true}));
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        console.log(tabs);
+    });
+
+    const downloadButton = document.querySelector('button');
+    if (downloadButton) {
+        downloadButton.addEventListener('click', function() {
+            setupDownloadButton();
+        });
+    }
+});
+
+function setupDownloadButton() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {action: "getClickedWords"}, function(response) {
             console.log('response:', response);
             if (response && response.data) {
-                setupDownloadButton(response.data);
+                downloadDataAsCSV(response.data);
             }
         });
-    });
-});
-
-function setupDownloadButton(data) {
-    document.getElementById('downloadButton').addEventListener('click', function() {
-        console.log('button clicked', data);
-        downloadDataAsCSV(data);
     });
 }
 
