@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "ClickTranslate",
+  "version": "1.0",
+  "author": "Mozilla",
+  "description": "Quick & Convenient Flashcard Generation",
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/anytimePause-48.png"
+  },
+  "icons": {
+    "48": "icons/anytimePause-48.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["clickTranslate.js"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "activeTab",
+    "tabs",
+    "https://libretranslate.eownerdead.dedyn.io/*"
+  ]
+}
