@@ -8,7 +8,7 @@ document.addEventListener('click', async function(event) {
     if (word) {
         const translation = await translate(word);
         console.log('Clicked word:', word);
-        console.log('Translation:', await translate(word));
+        console.log('Translation:', translation);
         saveTranslation(word, translation);
     }
 });

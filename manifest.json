@@ -19,9 +19,9 @@
   ],
   "permissions": [
     "storage",
+    "downloads",
     "unlimitedStorage",
     "activeTab",
-    "tabs",
     "https://libretranslate.eownerdead.dedyn.io/*"
   ]
 }

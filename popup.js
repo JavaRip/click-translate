@@ -16,28 +16,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function setupDownloadButton() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {action: "getClickedWords"}, function(response) {
+        chrome.tabs.sendMessage(tabs[0].id, {action: "getClickedWords"}, function (response) {
             console.log('response:', response);
             if (response && response.data) {
-                downloadDataAsCSV(response.data);
+                const translations = JSON.parse(JSON.stringify(response.data));
+                const csvPairs = [];
+
+                for (const [key, value] of Object.entries(translations)) {
+                    csvPairs.push(`${key},${value}\n`);
+                }
+
+                downloadTranslation(csvPairs);
             }
         });
     });
 }
 
-function downloadDataAsCSV(data) {
-    let csvContent = "data:text/csv;charset=utf-8,Word,Translation\n";
-    data.forEach(({ word, translation }) => {
-        csvContent += `"${word}","${translation}"\n`;
+/*
+function downloadTranslation converts the input data into a plaintext Blob
+and generates an Object URL out of it. The resulting URL is used as a target
+for downloading data into the user's filesystem.
+ */
+function downloadTranslation(data) {
+    const b = new Blob(data, { type: "text/plain" });
+    const url = URL.createObjectURL(b);
+    browser.downloads.download({
+        filename: "translation-pairs.csv",
+        url: url
     });
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "translations.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
 }
-
-console.log('hello world');
