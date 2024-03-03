@@ -24,14 +24,12 @@ function trimPunctuation(word) {
 
     for (let i = 0; i < word.length; i++) {
         const tokenFound = tokensInString(word.charAt(i));
-        if (tokenFound) {
-            finalString += " ";
-        } else {
+        if (!tokenFound) {
             finalString += word.charAt(i);
         }
     }
 
-    return finalString.replaceAll(" ", "");
+    return finalString;
 }
 
 /*
