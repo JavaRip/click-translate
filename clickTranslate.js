@@ -37,7 +37,7 @@ Function tokensInString checks if a letter from a string matches the token
 string.
  */
 function tokensInString(letter) {
-    const tokens = `¬\`¦!"£$%^&*()_+-={}~[]#|\\:@;'<>?,./1234567890`;
+    const tokens = `¬\`¦!"£$%^&*()_+={}~[]#|\\:@;'<>?,./1234567890`;
     for (const token of tokens) {
         if (letter === token) {
             return true;
