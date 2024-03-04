@@ -6,12 +6,45 @@ document.addEventListener('click', async function(event) {
     }
 
     if (word) {
+        word = trimPunctuation(word);
         const translation = await translate(word);
         console.log('Clicked word:', word);
         console.log('Translation:', await translate(word));
         saveTranslation(word, translation);
     }
 });
+
+/*
+Function trimPunctuation replaces unnecessary tokens in the target string with
+whitespaces, then trims the remaining whitespaces.
+ */
+function trimPunctuation(word) {
+    let finalString = "";
+
+    for (let i = 0; i < word.length; i++) {
+        const tokenFound = tokensInString(word.charAt(i));
+        if (!tokenFound) {
+            finalString += word.charAt(i);
+        }
+    }
+
+    return finalString;
+}
+
+/*
+Function tokensInString checks if a letter from a string matches the token
+string.
+ */
+function tokensInString(letter) {
+    const tokens = `¬\`¦!"£$%^&*()_+={}~[]#|\\:@;'<>?,./1234567890`;
+    for (const token of tokens) {
+        if (letter === token) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 function getWordFromPosition(text, position) {
     const words = text.split(/\s+/);
