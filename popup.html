@@ -3,13 +3,30 @@
 <head>
     <title>Download Translations</title>
     <style>
-        /* Add any styling here */
+        select { margin-bottom: 5%; }
+        p { padding: 0; color: gray; font-size: 0.9rem; margin-top: 0; margin-bottom: 1%; }
         body { padding: 10px; font-family: Arial, sans-serif; }
         button { padding: 5px 10px; }
     </style>
+    <script defer src="popup.js"></script>
 </head>
 <body>
-    <button id="downloadButton">Download Translations</button>
-    <script src="popup.js"></script>
+    <label for="source-lang">Choose source language: </label>
+    <p>The source language is the original language of your text.</p>
+    <select id="source-lang">
+        <option selected value="auto">Auto-detect language.</option>
+    </select>
+
+    <br />
+
+    <label for="target-lang">Choose target language: </label>
+    <p>The target language is the language you want to translate to.</p>
+    <select id="target-lang">
+        <option selected value="english">English.</option>
+    </select>
+
+    <br />
+
+    <button id="downloadButton">Download Translations.</button>
 </body>
 </html>

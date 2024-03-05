@@ -17,6 +17,9 @@
       "js": ["clickTranslate.js"]
     }
   ],
+  "web_accessible_resources": [
+    "languages/languages.json"
+  ],
   "permissions": [
     "storage",
     "unlimitedStorage",

@@ -25,6 +25,8 @@ function getWordFromPosition(text, position) {
     return '';
 }
 
+// TODO:
+//  - Change the source and target codes based on the drop-down menu options values.
 async function translate(word) {
     const res = await fetch("https://libretranslate.eownerdead.dedyn.io/translate", {
         method: "POST",
