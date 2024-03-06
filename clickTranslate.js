@@ -8,7 +8,7 @@ document.addEventListener('click', async function(event) {
     if (word) {
         const translation = await translate(word);
         console.log('Clicked word:', word);
-        console.log('Translation:', await translate(word));
+        console.log('Translation:', translation);
         saveTranslation(word, translation);
     }
 });
@@ -25,15 +25,16 @@ function getWordFromPosition(text, position) {
     return '';
 }
 
-// TODO:
-//  - Change the source and target codes based on the drop-down menu options values.
 async function translate(word) {
+    const source = (await browser.storage.local.get('source')).source;
+    const target = (await browser.storage.local.get('target')).target;
+
     const res = await fetch("https://libretranslate.eownerdead.dedyn.io/translate", {
         method: "POST",
         body: JSON.stringify({
                 q: word,
-                source: "de",
-                target: "en",
+                source,
+                target,
                 format: "text",
         }),
         headers: { "Content-Type": "application/json" }
