@@ -26,12 +26,15 @@ function getWordFromPosition(text, position) {
 }
 
 async function translate(word) {
+    const source = (await browser.storage.local.get('source')).source;
+    const target = (await browser.storage.local.get('target')).target;
+
     const res = await fetch("https://libretranslate.eownerdead.dedyn.io/translate", {
         method: "POST",
         body: JSON.stringify({
                 q: word,
-                source: "de",
-                target: "en",
+                source,
+                target,
                 format: "text",
         }),
         headers: { "Content-Type": "application/json" }
