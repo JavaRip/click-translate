@@ -146,9 +146,6 @@ function downloadTranslation(data) {
         url: url
     });
 }
-<<<<<<< HEAD
 
 console.log('hello world');
 setup();
-=======
->>>>>>> main
