@@ -6,44 +6,35 @@ document.addEventListener('click', async function(event) {
     }
 
     if (word) {
-        word = trimPunctuation(word);
-        const translation = await translate(word);
-        console.log('Clicked word:', word);
-        console.log('Translation:', await translate(word));
-        saveTranslation(word, translation);
+        const trimmedWord = trimPunctuation(word);
+        if (trimmedWord) {
+            const translation = await translate(trimmedWord);
+            console.log('Clicked word:', trimmedWord);
+            console.log('Translation:', translation);
+            saveTranslation(trimmedWord, translation);
+        }
+
     }
 });
 
 /*
 Function trimPunctuation replaces unnecessary tokens in the target string with
-whitespaces, then trims the remaining whitespaces.
+whitespaces, then trims the remaining whitespaces. If a word contains any
+numbers, from zero to nine, then the function will return an empty string.
  */
+// TODO:
+//  Fix Regex to include UNICODE
 function trimPunctuation(word) {
-    let finalString = "";
+    const nums = /[0123456789]/g;
+    const re = /[¬`¦!"£$%^&*()_+1234567890={}~\[\]#:@;'|<>?,.\/]/g;
 
-    for (let i = 0; i < word.length; i++) {
-        const tokenFound = tokensInString(word.charAt(i));
-        if (!tokenFound) {
-            finalString += word.charAt(i);
-        }
+    // We return an empty string because it is meaningless to translate numeric
+    // values.
+    if (word.match(nums)) {
+        return "";
     }
 
-    return finalString;
-}
-
-/*
-Function tokensInString checks if a letter from a string matches the token
-string.
- */
-function tokensInString(letter) {
-    const tokens = `¬\`¦!"£$%^&*()_+={}~[]#|\\:@;'<>?,./1234567890`;
-    for (const token of tokens) {
-        if (letter === token) {
-            return true;
-        }
-    }
-
-    return false;
+    return word.replace(re, "");
 }
 
 function getWordFromPosition(text, position) {
@@ -59,7 +50,7 @@ function getWordFromPosition(text, position) {
 }
 
 async function translate(word) {
-    const res = await fetch("https://libretranslate.eownerdead.dedyn.io/translate", {
+    const res = await fetch("https://libretranslate.eownerdead.dedyn.io/", {
         method: "POST",
         body: JSON.stringify({
                 q: word,
